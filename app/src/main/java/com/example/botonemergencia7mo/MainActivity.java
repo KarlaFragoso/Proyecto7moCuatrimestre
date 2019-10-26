@@ -23,7 +23,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.SmsManager;
+import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,7 +50,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button EnviarGuardar;
+    Button btnEnviarGuardar;
 
     TextView mensaje1;
     TextView mensaje2;
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btnEnviarGuardar = findViewById(R.id.btnEnviarGuardar);
         cliente = new AsyncHttpClient();
         obtenerClientes();
         new Contactos();
@@ -86,7 +87,12 @@ public class MainActivity extends AppCompatActivity {
 
         //codigo del boton de envio del mensaje
 
-
+        btnEnviarGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              obtenerClientes();
+            }
+        });
 
     }  //Aqui termina el OnCreate
 
@@ -124,14 +130,12 @@ public class MainActivity extends AppCompatActivity {
                 c.setTelefono(jsonArreglo.getJSONObject(i).getString("telefono"));
                 lista.add(c);
 
-                // String messageToSend = "Hola Este es un ms de auxilio";
-                // SmsManager sms = SmsManager.getDefault();
-                //   c.getTelefono();
-                //  sms.sendTextMessage(c.getTelefono(), null, "https://www.google.com.pe/maps?q=loc:" + "\n" + "Ayuda!!, estoy en: " + "\n" + messageToSend, null, null);
+                String messageToSend = "Hola Este es un ms de auxilio";
+                android.telephony.gsm.SmsManager sms = SmsManager.getDefault();
+                c.getTelefono();
+                sms.sendTextMessage(c.getTelefono(), null, "https://www.google.com.pe/maps?q=loc:" + "\n" + "Ayuda!!, estoy en: " + "\n" + messageToSend, null, null);
 
-                // String number = "7752016959";
-                // SmsManager.getDefault().sendTextMessage(number, null, "https://www.google.com.pe/maps?q=loc:"+  "\n" + "Ayuda!!, estoy en: "  , null, null);
-
+                Log.e("envio mensaje", String.valueOf(btnEnviarGuardar));
             }
         }catch (Exception e1){
             e1.printStackTrace();

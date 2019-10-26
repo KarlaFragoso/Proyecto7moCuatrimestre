@@ -125,12 +125,12 @@ public class ActivityContactos extends AppCompatActivity {
                 c.setTelefono(jsonArreglo.getJSONObject(i).getString("telefono"));
                 lista.add(c);
 
-                String messageToSend = "Hola Este es un ms de auxilio";
+              /**  String messageToSend = "Hola Este es un ms de auxilio";
                SmsManager sms = SmsManager.getDefault();
                c.getTelefono();
                sms.sendTextMessage(c.getTelefono(), null, "https://www.google.com.pe/maps?q=loc:" + "\n" + "Ayuda!!, estoy en: " + "\n" + messageToSend, null, null);
 
-          
+*/
             }
             ArrayAdapter<Contactos> a = new ArrayAdapter(this,android.R.layout.simple_list_item_1,lista);
             lvDatos.setAdapter(a);
